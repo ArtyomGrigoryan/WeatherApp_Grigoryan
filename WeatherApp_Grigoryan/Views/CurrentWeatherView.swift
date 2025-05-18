@@ -52,7 +52,7 @@ class CurrentWeatherView: UIView {
     private func setupViews() {
         backgroundColor = .secondarySystemBackground
         layer.cornerRadius = 12
-        clipsToBounds = true
+        //clipsToBounds = true
                 
         let contentStack = UIStackView(arrangedSubviews: [
             cityLabel,
