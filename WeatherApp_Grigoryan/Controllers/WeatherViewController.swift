@@ -20,14 +20,24 @@ class WeatherViewController: UIViewController {
         setupObservers()
         setupView()
         
-        Task {
-            await fetchLocation()
-            await fetchForecast()
-        }
+        fetchLocationAndForecast()
     }
     
     deinit {
         NotificationCenter.default.removeObserver(self)
+    }
+    
+    private func setupView() {
+        view.backgroundColor = .systemBackground
+        view.addSubview(weatherView)
+        
+        weatherView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            weatherView.topAnchor.constraint(equalTo: view.topAnchor),
+            weatherView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            weatherView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            weatherView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+        ])
     }
     
     // Позволит не выгружая приложение из памяти обновить геолокацию (если свернуть приложение и зайти в "Настройки" и дать доступ к геолокации, если оно не было дано ранее)
@@ -55,19 +65,6 @@ class WeatherViewController: UIViewController {
             await fetchForecast()
             isFetching = false
         }
-    }
-      
-    private func setupView() {
-        view.backgroundColor = .systemBackground
-        view.addSubview(weatherView)
-        
-        weatherView.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            weatherView.topAnchor.constraint(equalTo: view.topAnchor),
-            weatherView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            weatherView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            weatherView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
-        ])
     }
     
     private func fetchLocation() async {
